@@ -1,0 +1,49 @@
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/andriod_index_top" />
+
+    <andriod.support.v4.view.ViewPager
+             android:id="@+id/vp_content"
+             android:layout_width="match_parent"
+             android:background="#ffffff"
+             android:layout_height="0dp"
+             android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hehehehehheheheheh"/>
+    </andriod.support.v4.view.ViewPager>
+
+
+    <include layout="@layout/android_index_bottom" />
+</LinearLayout>-->
+
+
+     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+       android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+         <include layout="@layout/android_index_top" />
+
+         <android.support.v4.view.ViewPager
+            android:id="@+id/vp_content"
+            android:layout_width="match_parent"
+            android:background="#ffffff"
+             android:layout_height="0dp"
+             android:layout_weight="1" >
+         </android.support.v4.view.ViewPager>
+
+         <include layout="@layout/android_index_bottom" />
+
+     </LinearLayout>
+
+
+<!--
+为什么上面的注释部分会出现问题？？？？？？？  点击错误 修改了什么 好像就好了。。。。。
+-->

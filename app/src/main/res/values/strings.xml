@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PMA</string>
+    <string name="login">登录</string>
+    <string name="query">查找</string>
+    <string name="cAll">浏览</string>
+    <string name="add">添加</string>
+    <string name="title_activity_index">IndexActivity</string>
+</resources>
