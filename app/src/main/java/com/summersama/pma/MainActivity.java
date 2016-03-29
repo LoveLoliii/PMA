@@ -2,6 +2,7 @@ package com.summersama.pma;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,35 +13,28 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.summersama.pma.model.PmaBean;
+import com.summersama.pma.tool.DbHelper;
+
 public class MainActivity extends AppCompatActivity {
      EditText metUserName,metPassword;
+    DbHelper mDbHelper;
+    String userName;
+    String password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // createDataBase();
+       mDbHelper = new DbHelper(this);
+
         initView();
         setLoginListener();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.main, menu);
-        return  true;
-    }
 
 
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()) {
-            case R.id.add_item:
-                Toast.makeText(MainActivity.this,"点击了Add",Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.remove_item:
-                Toast.makeText(MainActivity.this,"点击了Remove",Toast.LENGTH_SHORT).show();
-                break;
-            default:
-        }
-        return true;
-    }
+
+
 
 
     private void initView() {
@@ -48,17 +42,6 @@ public class MainActivity extends AppCompatActivity {
         metPassword=(EditText)findViewById(R.id.Password);
     }
 
-    private void createDataBase() {
-         //final String Table_Name= "lytic_table";
-
-
-        SQLiteDatabase db = openOrCreateDatabase("pma.db",MODE_PRIVATE,null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS pma"+
-                "( pmaId integer primary key autoincrement,"+
-                "UserName varchar(50),"+
-                "Password varchar(50))");
-
-    }
 
     private void setLoginListener() {
       MyListener listener= new MyListener(this,metUserName,metPassword);
@@ -84,10 +67,35 @@ public class MainActivity extends AppCompatActivity {
                 etPassword.setError("密码不为空！！！");
             }
             Log.i("main", "用户名:" + strUserName + "密码：" + strPassword);
-            Intent intent = new Intent(MainActivity.this,IndexActivity.class);
-            startActivity(intent);
-            Toast.makeText(MainActivity.this,"功能尚未完善！",Toast.LENGTH_SHORT).show();
 
+            //查询数据库
+            SQLiteDatabase sqLiteDatabase = mDbHelper.getWritableDatabase();
+            // 调用SQLiteDatabase对象的query方法进行查询，返回一个Cursor对象：由数据库查询返回的结果集对象
+                    // 第一个参数String：表名
+                    // 第二个参数String[]:要查询的列名
+                    // 第三个参数String：查询条件
+                    // 第四个参数String[]：查询条件的参数
+                    // 第五个参数String:对查询的结果进行分组
+                    // 第六个参数String：对分组的结果进行限制
+                    // 第七个参数String：对查询的结果进行排序
+
+            Cursor cursor =sqLiteDatabase.query("pmar",new String[]{"userName","password"},"password=?",new String[]{"123456"},null,null,null);
+            while (cursor.moveToNext()){
+                userName = cursor.getString(cursor.getColumnIndex("userName"));
+                password = cursor.getString(cursor.getColumnIndex("password"));
+
+            }
+            if(strUserName.equals(userName)&&strPassword.equals(password)) {
+                Toast.makeText(MainActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+
+
+                Intent intent = new Intent(MainActivity.this, IndexActivity.class);
+                startActivity(intent);
+            }else {
+                Toast.makeText(MainActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, userName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, password, Toast.LENGTH_SHORT).show();
+            }
 
         }
     }
