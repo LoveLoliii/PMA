@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,11 +28,11 @@ public class IndexActivity extends Activity implements View.OnClickListener, Vie
     private LinearLayout ll_add;
     private LinearLayout ll_query;
 
-    DbHelper mdbHelper;
-    Button b= (Button) findViewById(R.id.addBtn);
-    final EditText addUser = (EditText) findViewById(R.id.userEditText);
-    final EditText addPwd = (EditText) findViewById(R.id.pwdEditText);
-    final EditText addOther= (EditText) findViewById(R.id.otherEditText);
+    DbHelper mdbHelper= new DbHelper(this); //实例化之后才能使用mdnHelper的方法 否则会报空对象引用" on a null object reference"
+    Button b;
+    EditText addUser;
+    EditText addPwd;
+    EditText addOther;
 
     //底部菜单的4个ImageView
     private ImageView iv_home;
@@ -76,18 +77,20 @@ public class IndexActivity extends Activity implements View.OnClickListener, Vie
     private void setAddBtnListener() {
 
 
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PmaBean p = new PmaBean();
-                    p.setUserName(addUser.getText().toString());
-                    p.setPassword(addPwd.getText().toString());
-                    p.setOther(addOther.getText().toString());
-                    //mdbHelper.getWritableDatabase();
-                    mdbHelper.insertRecored(p);
-                    Log.i("insert", "ok!");
-                }
-            });
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PmaBean p = new PmaBean();
+                p.setUserName(addUser.getText().toString());
+                p.setPassword(addPwd.getText().toString());
+                p.setOther(addOther.getText().toString());
+                //mdbHelper.getWritableDatabase();
+
+                mdbHelper.insertRecored(p);
+                Toast.makeText(IndexActivity.this, p.getUserName().toString(), Toast.LENGTH_SHORT).show();
+                Log.i("insert", "ok!");
+            }
+        });
     }
 
 
@@ -127,6 +130,12 @@ public class IndexActivity extends Activity implements View.OnClickListener, Vie
         View page_3 = View.inflate(IndexActivity.this,R.layout.android_index_page_3,null);
         View page_4 = View.inflate(IndexActivity.this,R.layout.android_index_page_4,null);
 
+
+        b = (Button) page_3.findViewById(R.id.addBtn);
+        addUser = (EditText) page_3.findViewById(R.id.userEditText);
+        addPwd= (EditText) page_3.findViewById(R.id.pwdEditText);
+        addOther= (EditText) page_3.findViewById(R.id.otherEditText);
+        Log.d("addUser",addUser.getText().toString());
 
         views = new ArrayList<View>();
         views.add(page_1);

@@ -32,7 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
         "password varchar(50))");
         //pma sava main table
         db.execSQL("CREATE TABLE IF NOT EXISTS pma"+
-                "(pmaId integer primary key autoincrement,"+
+                "(pmaId integer primary key autoincrement default 0,"+
                 "userName varchar(50),"+
                 "password varchar(50),"+"other varchar(50))");
         initInsert(db);
@@ -46,6 +46,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(password, "123456");
         db.insert("pmar", null, values);
 
+
     }
 
 
@@ -54,14 +55,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    public long insertRecored(PmaBean bean){
+    public void insertRecored(PmaBean bean){
             ContentValues values = new ContentValues();
+             //values.put("pmaId",bean.getPmaId());
             values.put("userName",bean.getUserName());
             values.put("password",bean.getPassword());
-             values.put("other",bean.getOther());
+            values.put("other",bean.getOther());
             SQLiteDatabase db =getWritableDatabase();
-        long count = db.insert("pma",null,values);
-        return (int) count;
+            db.insert("pma",null,values);
+            db.close();
+
     }
 
     public int deleteRecord(int pmarId){

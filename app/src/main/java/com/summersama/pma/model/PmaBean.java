@@ -5,7 +5,7 @@ package com.summersama.pma.model;
  */
 
 public class PmaBean {
-    private int pmaId;
+    //private int pmaId;
     private String userName;
     private String password;
     private String other;
@@ -18,13 +18,13 @@ public class PmaBean {
         this.other = other;
     }
 
-    public int getPmaId() {
-        return pmaId;
-    }
-
-    public void setPmaId(int pmarId) {
-        this.pmaId = pmaId;
-    }
+//    public int getPmaId() {
+//        return pmaId;
+//    }
+//
+//    public void setPmaId(int pmarId) {
+//        this.pmaId = pmaId;
+//    }
 
     public String getUserName() {
         return userName;
@@ -47,13 +47,13 @@ public class PmaBean {
     }
     public PmaBean(int pmaId,String userName,String password,String other){
         super();
-        this.pmaId=pmaId;
+       // this.pmaId=pmaId;
         this.userName=userName;
         this.password =password;}
     @Override
     public String toString(){
-        return "PmaBeam [pmarId="+pmaId+",userName="+userName+"," +
-                "password="+password+"]";
+        return "PmaBeam [userName="+userName+"," +
+                "password="+password+","+"other="+other+"]";
 
     }
 }
