@@ -3,11 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="PMA_添加"
-        android:textSize="30dp" />
-
+        android:textSize="30dp" />-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账号："
+        android:id="@+id/userLable"
+        android:textSize="30sp"
+        android:layout_alignBottom="@+id/userEditText"
+        android:layout_marginLeft="10dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_toEndOf="@+id/userLable"
+        android:id="@+id/userEditText"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码："
+        android:id="@+id/pwdLable"
+        android:textSize="30sp"
+        android:layout_below="@+id/userLable"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:id="@+id/pwdEditText"
+        android:layout_alignBottom="@+id/pwdLable"
+        android:layout_toEndOf="@+id/userLable" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="备注："
+        android:id="@+id/otherLable"
+        android:textSize="30sp"
+        android:layout_below="@+id/pwdLable"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:id="@+id/otherEditText"
+        android:layout_alignBottom="@+id/otherLable"
+        android:layout_toEndOf="@+id/userLable" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addBtn"
+        android:text="添加"
+        android:textSize="20sp"
+        android:layout_below="@+id/otherEditText"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

@@ -1,16 +1,20 @@
 package com.summersama.pma;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.summersama.pma.model.PmaBean;
+import com.summersama.pma.tool.DbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,12 @@ public class IndexActivity extends Activity implements View.OnClickListener, Vie
     private LinearLayout ll_cAll;
     private LinearLayout ll_add;
     private LinearLayout ll_query;
+
+    DbHelper mdbHelper;
+    Button b= (Button) findViewById(R.id.addBtn);
+    final EditText addUser = (EditText) findViewById(R.id.userEditText);
+    final EditText addPwd = (EditText) findViewById(R.id.pwdEditText);
+    final EditText addOther= (EditText) findViewById(R.id.otherEditText);
 
     //底部菜单的4个ImageView
     private ImageView iv_home;
@@ -60,6 +70,24 @@ public class IndexActivity extends Activity implements View.OnClickListener, Vie
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        setAddBtnListener();
+    }
+
+    private void setAddBtnListener() {
+
+
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PmaBean p = new PmaBean();
+                    p.setUserName(addUser.getText().toString());
+                    p.setPassword(addPwd.getText().toString());
+                    p.setOther(addOther.getText().toString());
+                    //mdbHelper.getWritableDatabase();
+                    mdbHelper.insertRecored(p);
+                    Log.i("insert", "ok!");
+                }
+            });
     }
 
 

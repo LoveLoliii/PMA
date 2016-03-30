@@ -1,19 +1,29 @@
 package com.summersama.pma.model;
 
 /**
- * Created by woshi on 2016/3/28.
+ * Created by woshi on 2016/3/30.
  */
+
 public class PmaBean {
-    private int pmarId;
+    private int pmaId;
     private String userName;
     private String password;
+    private String other;
 
-    public int getPmarId() {
-        return pmarId;
+    public String getOther() {
+        return other;
     }
 
-    public void setPmarId(int pmarId) {
-        this.pmarId = pmarId;
+    public void setOther(String other) {
+        this.other = other;
+    }
+
+    public int getPmaId() {
+        return pmaId;
+    }
+
+    public void setPmaId(int pmarId) {
+        this.pmaId = pmaId;
     }
 
     public String getUserName() {
@@ -35,15 +45,15 @@ public class PmaBean {
     public PmaBean(){
 
     }
-    public PmaBean(int pmarId,String userName,String password){
+    public PmaBean(int pmaId,String userName,String password,String other){
         super();
-        this.pmarId=pmarId;
+        this.pmaId=pmaId;
         this.userName=userName;
         this.password =password;}
-        @Override
-                public String toString(){
-                        return "PmaBeam [pmarId="+pmarId+",userName="+userName+"," +
-                                "password="+password+"]";
+    @Override
+    public String toString(){
+        return "PmaBeam [pmarId="+pmaId+",userName="+userName+"," +
+                "password="+password+"]";
 
     }
 }

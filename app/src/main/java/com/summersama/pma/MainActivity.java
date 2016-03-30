@@ -1,24 +1,18 @@
 package com.summersama.pma;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.summersama.pma.model.PmaBean;
+import com.summersama.pma.model.PmarBean;
 import com.summersama.pma.tool.DbHelper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
      EditText metUserName,metPassword;
@@ -91,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
 
             }*/
             mDbHelper.getWritableDatabase();
-            ArrayList<PmaBean> pma = mDbHelper.queryRecord(strPassword);
-            Iterator<PmaBean> it = pma.iterator();
+            ArrayList<PmarBean> pma = mDbHelper.queryRecord(strPassword);
+            Iterator<PmarBean> it = pma.iterator();
 
            while (it.hasNext()){
-               PmaBean ss =it.next();//若写成 userName=it.next().getUserName ;password =it.next().getPassword()
-                                    // 则会报越界错误。java.util.NoSuchElementException 
+               PmarBean ss =it.next();//若写成 userName=it.next().getUserName ;password =it.next().getPassword()
+                                    // 则会报越界错误。java.util.NoSuchElementException
                userName = ss.getUserName();
                password = ss.getPassword();
               if(strUserName.equals(userName)&&strPassword.equals(password)) {
