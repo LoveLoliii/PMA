@@ -42,7 +42,7 @@ public class PmaBean {
         this.password =password;}
         @Override
                 public String toString(){
-                        return "PmaBeam [pmaId="+pmarId+",userName="+userName+"," +
+                        return "PmaBeam [pmarId="+pmarId+",userName="+userName+"," +
                                 "password="+password+"]";
 
     }

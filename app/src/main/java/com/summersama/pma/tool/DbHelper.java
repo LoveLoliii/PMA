@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class DbHelper extends SQLiteOpenHelper {
     String userName = "userName";
     String password = "password";
+    int pmarId;
 
     public DbHelper(Context context) {
         super(context, "pam.db", null, 1);
@@ -23,17 +24,23 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //login or sign table
         db.execSQL("CREATE TABLE IF NOT EXISTS pmar"+
         "(pmarId integer primary key autoincrement,"+
         "userName varchar(50),"+
         "password varchar(50))");
+        //pma sava main table
+        db.execSQL("CREATE TABLE IF NOT EXISTS pma"+
+                "(pmaId integer primary key autoincrement,"+
+                "userName varchar(50),"+
+                "password varchar(50),"+"other varchar(50))");
         initInsert(db);
 
     }
 
     private void initInsert(SQLiteDatabase db) {
         ContentValues values = new ContentValues();
-
+        values.put("pmarId",1);
         values.put(userName,"root");
         values.put(password, "123456");
         db.insert("pmar", null, values);
@@ -51,7 +58,7 @@ public class DbHelper extends SQLiteOpenHelper {
             values.put("userName",bean.getUserName());
             values.put("password",bean.getPassword());
             SQLiteDatabase db =getWritableDatabase();
-        long count = db.insert("pmar",null,values);
+        long count = db.insert("pma",null,values);
         return (int) count;
     }
 
@@ -62,7 +69,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
     public ArrayList<PmaBean> queryAll(){
         SQLiteDatabase db = getWritableDatabase();
-        Cursor c =db.query("pmar", null, null, null, null, null, null);
+        Cursor c =db.query("pma", null, null, null, null, null, null);
         ArrayList<PmaBean> pma = new ArrayList<PmaBean>();
         while (c.moveToNext()){
             int pmaId = c.getInt(0);
@@ -76,16 +83,22 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 
-    public PmaBean queryRecord(String password){
+    public ArrayList<PmaBean> queryRecord(String password){
         SQLiteDatabase db =getWritableDatabase();
-        Cursor c =db.query("pmar",null,password+"=?",new String[]{""+password},null,null,null);
+        ArrayList<PmaBean> pma = new ArrayList<PmaBean>();
+        Cursor c =db.query("pmar",new String[]{"pmarId","userName","password"},"password=?",new String[]{password},null,null,null);
+        //"pmar",new String[]{"userName","password"},"password=?",new String[]{"123456"},null,null,null
+        //第二个查询列名凡是要存入javabean的都要写，不然不然找不到列名会报错Couldn’t read row 0, col -1 from CursorWindow
         while (c.moveToNext()){
-            int pmaId = c.getInt(c.getColumnIndex("pamId"));
-            String userName = c.getString(c.getColumnIndex("userName"));
+            pmarId = c.getInt(c.getColumnIndex("pmarId"));
+            userName = c.getString(c.getColumnIndex("userName"));
+           password = c.getString(c.getColumnIndex("password"));
 
-            PmaBean bean = new PmaBean(pmaId,userName,password);
-            return bean;
+            PmaBean bean = new PmaBean(pmarId,userName,password);
+            pma.add(bean);
+
         }
-      return  null;
+        c.close();
+      return  pma;//返回null会导致ititerator 无对象
     }
 }
